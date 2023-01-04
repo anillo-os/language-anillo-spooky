@@ -1,0 +1,28 @@
+{
+	"name": "language-anillo-spooky",
+	"displayName": "Spooky RPC Language Support",
+	"description": "An extension that adds language support for the Spooky RPC language used in Anillo OS",
+	"version": "0.0.1",
+	"author": "Ariel Abreu <facekapow@outlook.com>",
+	"license": "MIT",
+	"repository": "https://github.com/anillo-os/language-anillo-spooky",
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"categories": [
+		"Programming Languages"
+	],
+	"contributes": {
+		"languages": [{
+			"id": "anillo-spooky",
+			"aliases": ["Spooky RPC", "anillo-spooky"],
+			"extensions": ["spky"],
+			"configuration": "./language-configuration.json"
+		}],
+		"grammars": [{
+			"language": "anillo-spooky",
+			"scopeName": "source.spooky",
+			"path": "./syntaxes/anillo-spooky.tmLanguage.json"
+		}]
+	}
+}

@@ -1,0 +1,259 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Spooky RPC",
+	"patterns": [
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#interfaces"
+		},
+		{
+			"include": "#structures"
+		},
+		{
+			"include": "#directives"
+		},
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		}
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.number-sign.anillo-spooky",
+					"match": "#.*"
+				},
+				{
+					"name": "comment.line.double-slash.anillo-spooky",
+					"match": "//.*"
+				},
+				{
+					"name": "comment.block.anillo-spooky",
+					"begin": "/\\*",
+					"end": "\\*/"
+				}
+			]
+		},
+		"structures": {
+			"patterns": [
+				{
+					"name": "meta.structure.anillo-spooky",
+					"begin": "\\b(structure)\\s+([A-Za-z_][A-Za-z_0-9]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.structure.anillo-spooky"
+						},
+						"2": {
+							"name": "entity.name.class.anillo-spooky"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"name": "meta.member.anillo-spooky",
+							"match": "([A-Za-z_][A-Za-z_0-9]*)\\s*:\\s*([A-Za-z_][A-Za-z_0-9]*)",
+							"captures": {
+								"1": {
+									"name": "variable.other.member.anillo-spooky"
+								},
+								"2": {
+									"name": "entity.name.type.anillo-spooky",
+									"patterns": [
+										{
+											"name": "storage.type.built-in.anillo-spooky",
+											"match": "\\b(u8|u16|u32|u64|i8|i16|i32|i64|bool|f32|f64|data|proxy|channel)\\b"
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		"interfaces": {
+			"patterns": [
+				{
+					"name": "meta.interface.anillo-spooky",
+					"begin": "\\b(interface)\\s+([A-Za-z_][A-Za-z_0-9]*)\\s*\\{",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.type.interface.anillo-spooky"
+						},
+						"2": {
+							"name": "entity.name.class.anillo-spooky"
+						}
+					},
+					"end": "\\}",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#functions"
+						}
+					]
+				}
+			]
+		},
+		"parameters": {
+			"patterns": [
+				{
+					"name": "meta.parameter.callback.anillo-spooky",
+					"begin": "\\b([A-Za-z_][A-Za-z_0-9]*)\\s*:\\s*(in|out)\\s+(?:(nowait)\\s+)?(function)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.parameter.anillo-spooky"
+						},
+						"2": {
+							"name": "storage.modifier.parameter.anillo-spooky"
+						},
+						"3": {
+							"name": "storage.modifier.nowait.anillo-spooky"
+						},
+						"4": {
+							"name": "storage.type.function.anillo-spooky"
+						}
+					},
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#parameters"
+						}
+					]
+				},
+				{
+					"name": "meta.parameter.basic.anillo-spooky",
+					"match": "\\b([A-Za-z_][A-Za-z_0-9]*)\\s*:\\s*(in|out)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "variable.parameter.anillo-spooky"
+						},
+						"2": {
+							"name": "storage.modifier.parameter.anillo-spooky"
+						},
+						"3": {
+							"name": "entity.name.type.anillo-spooky",
+							"patterns": [
+								{
+									"name": "storage.type.built-in.anillo-spooky",
+									"match": "\\b(u8|u16|u32|u64|i8|i16|i32|i64|bool|f32|f64|data|proxy|channel)\\b"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		"functions": {
+			"patterns": [
+				{
+					"name": "meta.function.anillo-spooky",
+					"begin": "\\b(?:(nowait)\\s+)?(function)\\s+([A-Za-z_][A-Za-z_0-9]*)\\s*\\(",
+					"beginCaptures": {
+						"1": {
+							"name": "storage.modifier.nowait.anillo-spooky"
+						},
+						"2": {
+							"name": "storage.type.function.anillo-spooky"
+						},
+						"3": {
+							"name": "entity.name.function.anillo-spooky"
+						}
+					},
+					"end": "\\)",
+					"patterns": [
+						{
+							"include": "#comments"
+						},
+						{
+							"include": "#parameters"
+						}
+					]
+				}
+			]
+		},
+		"directives": {
+			"patterns": [
+				{
+					"name": "meta.directive.interface.anillo-spooky",
+					"match": "(@interface)\\s*=\\s*([A-Za-z_][A-Za-z_0-9]*)\\b",
+					"captures": {
+						"1": {
+							"name": "variable.language.interface.anillo-spooky"
+						},
+						"2": {
+							"name": "entity.name.root-interface.anillo-spooky"
+						}
+					}
+				},
+				{
+					"name": "meta.directive.server.anillo-spooky",
+					"begin": "(@server)\\s*=\\s*",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.language.server.anillo-spooky"
+						}
+					},
+					"end": "$",
+					"patterns": [
+						{
+							"include": "#strings"
+						}
+					]
+				},
+				{
+					"name": "meta.directive.realm.anillo-spooky",
+					"match": "(@realm)\\s*=\\s*(children|parent|local|global)\\b",
+					"captures": {
+						"1": {
+							"name": "variable.language.realm.anillo-spooky"
+						},
+						"2": {
+							"name": "constant.language.realm.anillo-spooky"
+						}
+					}
+				}
+			]
+		},
+		"keywords": {
+			"patterns": [
+				{
+					"name": "variable.language.anillo-spooky",
+					"match": "@(interface|server|realm)\\b"
+				},
+				{
+					"name": "storage.type.anillo-spooky",
+					"match": "\\b(interface|structure|function)\\b"
+				},
+				{
+					"name": "storage.modifier.anillo-spooky",
+					"match": "\\b(in|out|nowait)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.anillo-spooky",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.anillo-spooky",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.spooky"
+}
